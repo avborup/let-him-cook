@@ -4,7 +4,9 @@ export const IngredientsList = ({ recipe }: { recipe: Recipe }) => {
   return (
     <ul className="my-4 list-disc pl-5 space-y-3 leading-tight">
       {recipe.ingredients.map((ingredient, index) => (
-        <IngredientItem key={index} ingredient={ingredient} />
+        <li key={index}>
+          <IngredientItem ingredient={ingredient} />
+        </li>
       ))}
     </ul>
   );
@@ -15,7 +17,7 @@ export const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
   const caseClasses = "inline-block first-letter:uppercase";
 
   return (
-    <li>
+    <>
       {hasQuantity ? (
         <>
           <span className={caseClasses}>
@@ -24,6 +26,6 @@ export const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
         </>
       ) : null}
       <span className={hasQuantity ? "" : caseClasses}>{ingredient.name}</span>
-    </li>
+    </>
   );
 };

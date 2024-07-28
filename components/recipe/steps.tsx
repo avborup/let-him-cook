@@ -1,12 +1,21 @@
 import { Recipe, Step } from "@cooklang/cooklang-ts";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { IngredientItem } from "./ingredients";
 
 export const StepsList = ({ recipe }: { recipe: Recipe }) => {
   return (
-    <ul className="my-4 list-disc pl-5 space-y-3">
-      {recipe.steps.map((step, index) => (
-        <StepItem key={index} step={step} />
-      ))}
-    </ul>
+    <TooltipProvider>
+      <ul className="my-4 list-disc pl-5 space-y-3">
+        {recipe.steps.map((step, index) => (
+          <StepItem key={index} step={step} />
+        ))}
+      </ul>
+    </TooltipProvider>
   );
 };
 
@@ -23,10 +32,21 @@ export const StepItem = ({ step }: { step: Step }) => {
 export const StepSpan = ({ item }: { item: Step[number] }) => {
   switch (item.type) {
     case "ingredient":
-      return (
-        <span className="text-green-700 transition-colors font-semibold">
+      const content = (
+        <span className="text-green-700 transition-colors font-semibold hover:underline decoration-dotted underline-offset-4">
           {item.name}
         </span>
+      );
+
+      return item.quantity !== "" ? (
+        <Tooltip delayDuration={100}>
+          <TooltipTrigger>{content}</TooltipTrigger>
+          <TooltipContent>
+            <IngredientItem ingredient={item} />
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        content
       );
     case "cookware":
       return (
