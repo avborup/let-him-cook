@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import { Recipe, Parser, getImageURL, Ingredient } from "@cooklang/cooklang-ts";
 import { Heading2 } from "@/components/typography/h2";
+import { IngredientsList } from "@/components/recipe/ingredients";
 
 export default async function RecipePage({
   params,
@@ -25,40 +26,12 @@ export default async function RecipePage({
     defaultIngredientAmount: "",
   });
 
-  console.log(recipe);
+  console.log(JSON.stringify(recipe, null, 2));
 
   return (
     <>
-      <Heading2>Ingredienser</Heading2>
-      <IngredientsList ingredients={recipe.ingredients} />
+      <Heading2 className="pt-4">Ingredienser</Heading2>
+      <IngredientsList recipe={recipe} />
     </>
   );
 }
-
-const IngredientsList = ({ ingredients }: { ingredients: Ingredient[] }) => {
-  return (
-    <ul className="my-4 list-disc pl-5 space-y-3">
-      {ingredients.map((ingredient, index) => (
-        <IngredientItem key={index} ingredient={ingredient} />
-      ))}
-    </ul>
-  );
-};
-
-const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
-  const hasQuantity = ingredient.quantity !== "";
-  const caseClasses = "inline-block first-letter:uppercase";
-
-  return (
-    <li>
-      {hasQuantity ? (
-        <>
-          <span className={caseClasses}>
-            {ingredient.quantity} {ingredient.units}
-          </span>{" "}
-        </>
-      ) : null}
-      <span className={hasQuantity ? "" : caseClasses}>{ingredient.name}</span>
-    </li>
-  );
-};
