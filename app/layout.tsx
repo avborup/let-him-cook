@@ -1,5 +1,6 @@
 import { Lora } from "next/font/google";
 import "./globals.css";
+import { CommandMenu } from "@/components/commandPalette";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="da" className={lora.className}>
       <body className="bg-background text-foreground">
+        <CommandMenu />
         <main className="flex justify-center max-w-2xl flex-col mx-auto py-8">
           {children}
         </main>
