@@ -10,11 +10,11 @@ import { IngredientItem } from "./ingredients";
 export const StepsList = ({ recipe }: { recipe: Recipe }) => {
   return (
     <TooltipProvider>
-      <ul className="my-4 list-disc pl-5 space-y-3">
+      <ol className="my-4 list-decimal pl-5 space-y-3">
         {recipe.steps.map((step, index) => (
           <StepItem key={index} step={step} />
         ))}
-      </ul>
+      </ol>
     </TooltipProvider>
   );
 };
