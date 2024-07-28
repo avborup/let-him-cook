@@ -2,7 +2,7 @@
 
 A simple recipe app built with Next.js and Supabase. Its primary objective is to be a personalised way to browse and view recipes, allowing fuzzy-finding, filtering based on ingredients and categories, ratings from a close group of friends, and more.
 
-## Clone and run locally
+## Run locally
 
 1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
 
@@ -24,3 +24,13 @@ A simple recipe app built with Next.js and Supabase. Its primary objective is to
    ```
 
 > Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+
+## Libraries and tools
+
+To give a quick overview, this project uses:
+
+- [Next.js](https://nextjs.org/) for UI focused on server rendering and static site generation
+- [Supabase](https://supabase.io/) for the database, storage, and authentication
+- [Cooklang](https://cooklang.org/) as a markup language for defining recipes
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [shadcn/ui](https://ui.shadcn.com/) for UI components
