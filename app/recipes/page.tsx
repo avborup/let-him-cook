@@ -1,13 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tables } from "@/database.types";
 
 export default async function RecipePage() {
@@ -43,7 +36,7 @@ const RecipeCard = ({ recipe }: { recipe: Tables<"recipes"> }) => {
             href={`/recipes/${recipe.id}`}
             className="text-white bg-primary hover:bg-primary/80 focus:ring-4 focus:ring-primary/30 font-medium rounded-md text-sm px-5 py-2.5 focus:outline-none"
           >
-            Read more
+            Se opskrift
           </a>
         </CardFooter>
       </Card>

@@ -53,7 +53,7 @@ const RecipeBreadcrumb = ({ recipeName }: { recipeName: string }) => {
     <Breadcrumb className="pb-4">
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/recipes">Recipes</BreadcrumbLink>
+          <BreadcrumbLink href="/recipes">Opskrifter</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
