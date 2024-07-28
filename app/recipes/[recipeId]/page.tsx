@@ -50,7 +50,7 @@ export default async function RecipePage({
 
 const RecipeBreadcrumb = ({ recipeName }: { recipeName: string }) => {
   return (
-    <Breadcrumb>
+    <Breadcrumb className="pb-4">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/recipes">Recipes</BreadcrumbLink>

@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="da" className={lora.className}>
       <body className="bg-background text-foreground">
-        <main className="flex justify-center max-w-2xl flex-col mx-auto">
+        <main className="flex justify-center max-w-2xl flex-col mx-auto py-8">
           {children}
         </main>
       </body>
