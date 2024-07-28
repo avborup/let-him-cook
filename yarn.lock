@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
+"@cooklang/cooklang-ts@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@cooklang/cooklang-ts/-/cooklang-ts-1.2.6.tgz#61ac470c1af498248f2362d7f8b8b28effcef0e2"
+  integrity sha512-W1a7hFMDgZtVtMvVbQGMegMoWjFGqA17ZD8rGsEBA7WUhTjlGeI/758DtUhxT36uFXFwGMc3LZF6TPFeIXAgGw==
+
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@isaacs/cliui/-/cliui-8.0.2.tgz#b37667b7bc181c168782259bab42474fbf52b550"

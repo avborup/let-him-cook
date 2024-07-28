@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
+import { Recipe, Parser, getImageURL, Ingredient } from "@cooklang/cooklang-ts";
 
 export default async function RecipePage({
   params,
@@ -18,7 +19,53 @@ export default async function RecipePage({
     notFound();
   }
 
-  console.log(data);
+  const recipe = new Recipe(data.cooklang, {
+    includeStepNumber: true,
+    defaultIngredientAmount: "",
+  });
 
-  return <pre>{JSON.stringify(data, null, 2)}</pre>;
+  console.log(recipe);
+
+  return (
+    <>
+      <Heading>Ingredienser</Heading>
+      <IngredientsList ingredients={recipe.ingredients} />
+    </>
+  );
 }
+
+const IngredientsList = ({ ingredients }: { ingredients: Ingredient[] }) => {
+  return (
+    <ul className="list-disc pl-5 space-y-3">
+      {ingredients.map((ingredient, index) => (
+        <IngredientItem key={index} ingredient={ingredient} />
+      ))}
+    </ul>
+  );
+};
+
+const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
+  const hasQuantity = ingredient.quantity !== "";
+  const caseClasses = "inline-block first-letter:uppercase";
+
+  return (
+    <li>
+      {hasQuantity ? (
+        <>
+          <span className={caseClasses}>
+            {ingredient.quantity} {ingredient.units}
+          </span>{" "}
+        </>
+      ) : null}
+      <span className={hasQuantity ? "" : caseClasses}>{ingredient.name}</span>
+    </li>
+  );
+};
+
+const Heading = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <h2 className="mb-4 text-4xl font-bold leading-none tracking-tight ">
+      {children}
+    </h2>
+  );
+};
