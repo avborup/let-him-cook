@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 import { Recipe, Parser, getImageURL, Ingredient } from "@cooklang/cooklang-ts";
+import { Heading2 } from "@/components/typography/h2";
 
 export default async function RecipePage({
   params,
@@ -28,7 +29,7 @@ export default async function RecipePage({
 
   return (
     <>
-      <Heading>Ingredienser</Heading>
+      <Heading2>Ingredienser</Heading2>
       <IngredientsList ingredients={recipe.ingredients} />
     </>
   );
@@ -36,7 +37,7 @@ export default async function RecipePage({
 
 const IngredientsList = ({ ingredients }: { ingredients: Ingredient[] }) => {
   return (
-    <ul className="list-disc pl-5 space-y-3">
+    <ul className="my-4 list-disc pl-5 space-y-3">
       {ingredients.map((ingredient, index) => (
         <IngredientItem key={index} ingredient={ingredient} />
       ))}
@@ -59,13 +60,5 @@ const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
       ) : null}
       <span className={hasQuantity ? "" : caseClasses}>{ingredient.name}</span>
     </li>
-  );
-};
-
-const Heading = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <h2 className="mb-4 text-4xl font-bold leading-none tracking-tight ">
-      {children}
-    </h2>
   );
 };
