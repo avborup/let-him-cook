@@ -12,6 +12,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { Tables } from "@/database.types";
@@ -19,6 +20,7 @@ import { Tables } from "@/database.types";
 export function CommandMenu() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
+  const [hasBeenOpenedOnce, setHasBeenOpenedOnce] = React.useState(false);
 
   const supabase = createClient();
 
@@ -27,13 +29,17 @@ export function CommandMenu() {
   );
 
   React.useEffect(() => {
+    if (!open) return;
+    if (hasBeenOpenedOnce) return;
+    setHasBeenOpenedOnce(true);
+
     const fetchRecipes = async () => {
       const { data } = await supabase.from("recipes").select();
       setRecipes(data);
     };
 
     fetchRecipes();
-  }, []);
+  }, [open, hasBeenOpenedOnce]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -64,15 +70,23 @@ export function CommandMenu() {
         </CommandGroup>
         <CommandSeparator />
         <CommandGroup heading="Recipes">
-          {recipes?.map((recipe) => (
-            <CommandItem
-              key={recipe.id}
-              onSelect={() => goToPage(`/recipes/${recipe.id}`)}
-            >
+          {recipes ? (
+            recipes.map((recipe) => (
+              <CommandItem
+                key={recipe.id}
+                onSelect={() => goToPage(`/recipes/${recipe.id}`)}
+                value={recipe.name + " " + recipe.cooklang}
+              >
+                <FileTextIcon className="mr-2 h-4 w-4" />
+                <span>{recipe.name}</span>
+              </CommandItem>
+            ))
+          ) : (
+            <CommandItem>
               <FileTextIcon className="mr-2 h-4 w-4" />
-              <span>{recipe.name}</span>
+              <Skeleton className="w-[80%] h-[20px] rounded-xl" />
             </CommandItem>
-          ))}
+          )}
         </CommandGroup>
       </CommandList>
     </CommandDialog>
