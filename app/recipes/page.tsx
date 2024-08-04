@@ -13,7 +13,7 @@ export default async function RecipePage() {
 
   return (
     <>
-      <ul>
+      <ul className="grid gap-4">
         {data.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
