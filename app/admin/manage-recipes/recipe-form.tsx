@@ -118,7 +118,7 @@ export function RecipeForm() {
                 Forhåndsvis opskrift
               </Button>
             </DialogTrigger>
-            <DialogContent className="min-w-max">
+            <DialogContent className="min-w-max max-h-full overflow-scroll">
               <RecipeView
                 data={{
                   name: form.watch("name"),
