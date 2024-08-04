@@ -25,6 +25,7 @@ export default function NavBar() {
           </TooltipTrigger>
           <TooltipContent side="right">Home</TooltipContent>
         </Tooltip>
+        <TriggerSearchButton />
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
