@@ -1,6 +1,8 @@
 "use client";
 
+import { RecipeView } from "@/components/recipe/recipe";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -84,9 +86,32 @@ export function RecipeForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Gem
-        </Button>
+        <div className="grid gap-4">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="secondary"
+                className="w-full"
+                type="button"
+                disabled={!form.formState.isValid}
+              >
+                Forhåndsvis opskrift
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <RecipeView
+                data={{
+                  name: form.watch("name"),
+                  cooklang: form.watch("cooklang"),
+                  created_at: new Date().toISOString(),
+                }}
+              />
+            </DialogContent>
+          </Dialog>
+          <Button type="submit" className="w-full">
+            Gem
+          </Button>
+        </div>
       </form>
     </Form>
   );
