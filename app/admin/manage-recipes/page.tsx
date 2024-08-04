@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
-import { RecipeForm } from "./recipe-form";
+import { RecipeForm, RecipeFormProps } from "./recipe-form";
 
 export default async function PrivatePage() {
   const supabase = createClient();

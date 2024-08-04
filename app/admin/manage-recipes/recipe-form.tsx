@@ -1,6 +1,7 @@
 "use client";
 
 import { RecipeView } from "@/components/recipe/recipe";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
@@ -14,8 +15,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -33,8 +38,23 @@ export function RecipeForm() {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const [error, setError] = React.useState<string | null>(null);
+  const router = useRouter();
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const supabase = createClient();
+
+    const { data, error } = await supabase
+      .from("recipes")
+      .insert(values)
+      .select();
+
+    if (error) {
+      setError(error.message);
+      return;
+    }
+
+    router.push(`/recipes/${data[0].id}`);
   };
 
   return (
@@ -108,9 +128,26 @@ export function RecipeForm() {
               />
             </DialogContent>
           </Dialog>
-          <Button type="submit" className="w-full">
-            Gem
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Gemmer...
+              </>
+            ) : (
+              <>Gem</>
+            )}
           </Button>
+          {error && (
+            <Alert variant="destructive">
+              <AlertTitle>Der skete en fejl</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
         </div>
       </form>
     </Form>
