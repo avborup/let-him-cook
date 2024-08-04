@@ -98,7 +98,7 @@ export function RecipeForm() {
                 Forhåndsvis opskrift
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="min-w-max">
               <RecipeView
                 data={{
                   name: form.watch("name"),

@@ -19,13 +19,13 @@ export function RecipeView({ data }: { data: Omit<Tables<"recipes">, "id"> }) {
   });
 
   return (
-    <>
+    <div className="max-w-2xl">
       <RecipeBreadcrumb recipeName={data.name} />
       <Heading2 className="pt-4">Ingredienser</Heading2>
       <IngredientsList recipe={recipe} />
       <Heading2 className="pt-4">Fremgangsmåde</Heading2>
       <StepsList recipe={recipe} />
-    </>
+    </div>
   );
 }
 
