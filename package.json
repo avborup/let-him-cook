@@ -19,6 +19,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "geist": "^1.2.1",
+    "lucide-react": "^0.424.0",
     "next": "latest",
     "postcss": "8.4.33",
     "react": "18.2.0",
