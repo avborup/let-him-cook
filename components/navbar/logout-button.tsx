@@ -29,10 +29,10 @@ export default function LogOutButton() {
             className="cursor-pointer flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
           >
             <LogOut className="h-5 w-5" />
-            <span className="sr-only">Log Out</span>
+            <span className="sr-only">Log ud</span>
           </span>
         </TooltipTrigger>
-        <TooltipContent side="right">Log Out</TooltipContent>
+        <TooltipContent side="right">Log ud</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
