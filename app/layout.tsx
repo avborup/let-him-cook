@@ -30,7 +30,7 @@ export default function RootLayout({
         <TooltipProvider delayDuration={100}>
           <CommandMenu />
           <NavBar />
-          <main className="flex justify-center max-w-2xl flex-col mx-auto py-8">
+          <main className="flex justify-center max-w-2xl flex-col mx-auto py-8 px-4 md:px-0">
             {children}
           </main>
         </TooltipProvider>
