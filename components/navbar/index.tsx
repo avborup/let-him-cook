@@ -25,10 +25,10 @@ export default async function NavBar() {
             className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
           >
             <CookingPot className="h-4 w-4 transition-all group-hover:scale-110" />
-            <span className="sr-only">Let Him Cook home page</span>
+            <span className="sr-only">Let Him Cook</span>
           </Link>
         </TooltipTrigger>
-        <TooltipContent side="right">Home</TooltipContent>
+        <TooltipContent side="right">Hjem</TooltipContent>
       </Tooltip>
       <TriggerSearchButton />
     </>
@@ -42,10 +42,10 @@ export default async function NavBar() {
           className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
         >
           <FilePenLine className="h-5 w-5" />
-          <span className="sr-only">Manage recipes</span>
+          <span className="sr-only">Opret og redigér opskrifter</span>
         </Link>
       </TooltipTrigger>
-      <TooltipContent side="right">Manage recipes</TooltipContent>
+      <TooltipContent side="right">Opret og redigér opskrifter</TooltipContent>
     </Tooltip>
   ) : null;
 
@@ -57,10 +57,10 @@ export default async function NavBar() {
           className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
         >
           <LogIn className="h-5 w-5" />
-          <span className="sr-only">Log In</span>
+          <span className="sr-only">Log ind</span>
         </Link>
       </TooltipTrigger>
-      <TooltipContent side="right">Log In</TooltipContent>
+      <TooltipContent side="right">Log ind</TooltipContent>
     </Tooltip>
   ) : (
     <LogOutButton />

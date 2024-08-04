@@ -42,9 +42,9 @@ export default function LoginPage({
     <Card className="max-w-sm m-auto">
       <form>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Log ind</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account.
+            Indtast din email nedenfor for at logge ind.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -78,7 +78,7 @@ export default function LoginPage({
             pendingText="Signing In..."
             className="w-full"
           >
-            Sign In
+            Log ind
           </SubmitButton>
         </CardFooter>
       </form>

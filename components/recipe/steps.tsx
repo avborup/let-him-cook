@@ -61,6 +61,6 @@ export const StepSpan = ({ item }: { item: Step[number] }) => {
         </span>
       );
     case "text":
-      return <span>{item.value}</span>;
+      return <span className="text-wrap break-words">{item.value}</span>;
   }
 };
