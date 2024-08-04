@@ -13,18 +13,21 @@ export type Database = {
         Row: {
           cooklang: string
           created_at: string
+          has_photo: boolean
           id: string
           name: string
         }
         Insert: {
           cooklang: string
           created_at?: string
+          has_photo?: boolean
           id?: string
           name: string
         }
         Update: {
           cooklang?: string
           created_at?: string
+          has_photo?: boolean
           id?: string
           name?: string
         }

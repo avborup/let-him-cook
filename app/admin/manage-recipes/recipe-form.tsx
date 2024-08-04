@@ -31,6 +31,7 @@ const formSchema = z.object({
   cooklang: z.string().trim().min(1, {
     message: "Opskrift-indhold er påkrævet",
   }),
+  picture: z.instanceof(FileList).optional(),
 });
 
 export function RecipeForm() {
@@ -44,9 +45,16 @@ export function RecipeForm() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const supabase = createClient();
 
+    const photoFile =
+      values.picture && values.picture.length > 0 ? values.picture[0] : null;
+
     const { data, error } = await supabase
       .from("recipes")
-      .insert(values)
+      .insert({
+        name: values.name,
+        cooklang: values.cooklang,
+        has_photo: !!photoFile,
+      })
       .select();
 
     if (error) {
@@ -54,8 +62,21 @@ export function RecipeForm() {
       return;
     }
 
+    if (photoFile) {
+      const { error: uploadError } = await supabase.storage
+        .from("recipePhotos")
+        .upload(data[0].id, photoFile);
+
+      if (uploadError) {
+        setError(uploadError.message);
+        return;
+      }
+    }
+
     router.push(`/recipes/${data[0].id}`);
   };
+
+  const fileRef = form.register("picture");
 
   return (
     <Form {...form}>
@@ -76,6 +97,25 @@ export function RecipeForm() {
               <FormMessage />
             </FormItem>
           )}
+        />
+        <FormField
+          control={form.control}
+          name="picture"
+          render={() => {
+            return (
+              <FormItem>
+                <FormLabel>Billede (valgfrit)</FormLabel>
+                <FormControl>
+                  <Input type="file" {...fileRef} />
+                </FormControl>
+                <FormDescription>
+                  Vælg et flot billede til din opskrift. Billedet vil blive vist
+                  på opskriftsiden.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
         <FormField
           control={form.control}

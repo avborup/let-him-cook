@@ -11,8 +11,6 @@ export default async function RecipePage() {
     notFound();
   }
 
-  console.log(JSON.stringify(data, null, 2));
-
   return (
     <>
       <ul>

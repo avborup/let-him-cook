@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Recipe } from "@cooklang/cooklang-ts";
 import { Heading2 } from "@/components/typography/h2";
 import { IngredientsList } from "@/components/recipe/ingredients";
@@ -11,8 +12,13 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Tables } from "@/database.types";
+import { createClient } from "@/utils/supabase/client";
 
-export function RecipeView({ data }: { data: Omit<Tables<"recipes">, "id"> }) {
+export function RecipeView({
+  data,
+}: {
+  data: Tables<"recipes"> & { id?: string };
+}) {
   const recipe = new Recipe(data.cooklang, {
     includeStepNumber: true,
     defaultIngredientAmount: "",
@@ -21,6 +27,7 @@ export function RecipeView({ data }: { data: Omit<Tables<"recipes">, "id"> }) {
   return (
     <div className="max-w-2xl">
       <RecipeBreadcrumb recipeName={data.name} />
+      {data.has_photo && data.id && <RecipeImage id={data.id} />}
       <Heading2 className="pt-4">Ingredienser</Heading2>
       <IngredientsList recipe={recipe} />
       <Heading2 className="pt-4">Fremgangsmåde</Heading2>
@@ -42,5 +49,22 @@ const RecipeBreadcrumb = ({ recipeName }: { recipeName: string }) => {
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
+  );
+};
+
+const RecipeImage = ({ id }: { id: string }) => {
+  const supabase = createClient();
+  const imageUrl = supabase.storage.from("recipePhotos").getPublicUrl(id)
+    .data.publicUrl;
+
+  return (
+    <div className="h-72 w-full relative overflow-hidden rounded-md">
+      <Image
+        src={imageUrl}
+        alt="Picture of the recipe"
+        layout="fill"
+        className="object-cover"
+      />
+    </div>
   );
 };
