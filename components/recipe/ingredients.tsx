@@ -1,6 +1,10 @@
 import { Ingredient, Recipe } from "@cooklang/cooklang-ts";
 
 export const IngredientsList = ({ recipe }: { recipe: Recipe }) => {
+  if (recipe.ingredients.length === 0) {
+    return <p>Denne opskrift har ingen ingredienser.</p>;
+  }
+
   return (
     <ul className="my-4 list-disc pl-5 space-y-3 leading-tight">
       {recipe.ingredients.map((ingredient, index) => (
