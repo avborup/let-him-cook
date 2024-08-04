@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/tooltip";
 import TriggerSearchButton from "./search-button";
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import LogOutButton from "./logout-button";
 
 export default async function NavBar() {
