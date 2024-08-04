@@ -12,6 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Tables } from "@/database.types";
 
 export default async function RecipePage({
   params,
@@ -30,12 +31,14 @@ export default async function RecipePage({
     notFound();
   }
 
+  return <RecipeView data={data} />;
+}
+
+export function RecipeView({ data }: { data: Tables<"recipes"> }) {
   const recipe = new Recipe(data.cooklang, {
     includeStepNumber: true,
     defaultIngredientAmount: "",
   });
-
-  console.log(JSON.stringify(recipe, null, 2));
 
   return (
     <>
