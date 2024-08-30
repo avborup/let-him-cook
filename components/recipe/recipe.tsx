@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Tables } from "@/database.types";
 import { createClient } from "@/utils/supabase/client";
+import { importWasm } from "@/lib/wasm";
 
 export function RecipeView({
   data,
@@ -22,6 +23,10 @@ export function RecipeView({
   const recipe = new Recipe(data.cooklang, {
     includeStepNumber: true,
     defaultIngredientAmount: "",
+  });
+
+  importWasm().then((m) => {
+    console.log("Result", m.add(1, 2));
   });
 
   return (
