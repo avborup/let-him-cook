@@ -13,21 +13,26 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Tables } from "@/database.types";
 import { createClient } from "@/utils/supabase/client";
-import { importWasm } from "@/lib/wasm";
+import { WasmModule } from "@/lib/wasm";
 
-export function RecipeView({
-  data,
-}: {
-  data: Tables<"recipes"> & { id?: string };
-}) {
+export type RecipeViewProps = {
+  data: Omit<Tables<"recipes">, "id" | "has_photo"> & {
+    id?: string;
+    has_photo?: boolean;
+  };
+};
+
+export type InternalRecipeViewProps = RecipeViewProps & {
+  wasm: WasmModule;
+};
+
+export function RecipeView({ data, wasm }: InternalRecipeViewProps) {
   const recipe = new Recipe(data.cooklang, {
     includeStepNumber: true,
     defaultIngredientAmount: "",
   });
 
-  importWasm().then((m) => {
-    console.log("Result", m.add(1, 2));
-  });
+  console.log("Result", wasm.add(1, 2));
 
   return (
     <div className="max-w-2xl">

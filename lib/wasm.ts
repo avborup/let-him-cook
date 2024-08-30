@@ -12,3 +12,5 @@ export const importClientWasm = async () => {
   await init();
   return module;
 };
+
+export type WasmModule = Awaited<ReturnType<typeof importWasm>>;

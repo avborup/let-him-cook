@@ -1,6 +1,6 @@
 "use client";
 
-import { RecipeView } from "@/components/recipe/recipe";
+import RecipeView from "@/components/recipe/recipe-view-client";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
