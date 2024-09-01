@@ -1,4 +1,10 @@
-import { Ingredient, Recipe } from "@cooklang/cooklang-ts";
+import {
+  Ingredient,
+  Quantity,
+  Recipe,
+  ScalableValue,
+  Value,
+} from "@/lib/recipeBindings";
 
 export const IngredientsList = ({ recipe }: { recipe: Recipe }) => {
   if (recipe.ingredients.length === 0) {
@@ -17,19 +23,55 @@ export const IngredientsList = ({ recipe }: { recipe: Recipe }) => {
 };
 
 export const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
-  const hasQuantity = ingredient.quantity !== "";
   const caseClasses = "inline-block first-letter:uppercase";
 
   return (
     <>
-      {hasQuantity ? (
+      {ingredient.quantity ? (
         <>
           <span className={caseClasses}>
-            {ingredient.quantity} {ingredient.units}
+            {getQuantityString(
+              ingredient.quantity.unit,
+              ingredient.quantity.value.value,
+            )}
           </span>{" "}
         </>
       ) : null}
-      <span className={hasQuantity ? "" : caseClasses}>{ingredient.name}</span>
+      <span className={ingredient.quantity ? "" : caseClasses}>
+        {ingredient.name}
+      </span>
     </>
   );
+};
+
+export const getQuantityString = (
+  unit: string | undefined,
+  amount: Value,
+): string => {
+  let output = "";
+  switch (amount.type) {
+    case "text":
+      output += amount.value;
+      break;
+    case "number":
+      const num = amount.value;
+      switch (num.type) {
+        case "regular":
+          output += num.value;
+          break;
+        case "fraction":
+          output += `${num.value.whole} ${num.value.num}/${num.value.den}`;
+          break;
+      }
+      break;
+    case "range":
+      output += `${amount.value.start}-${amount.value.end}`;
+      break;
+  }
+
+  if (unit) {
+    output += ` ${unit}`;
+  }
+
+  return output;
 };
