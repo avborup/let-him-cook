@@ -1,4 +1,5 @@
 import RecipeView from "@/components/recipe/recipe-view-server";
+import { isUuid } from "@/lib/uuid";
 import { createClient } from "@/utils/supabase/client";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
@@ -14,12 +15,13 @@ export default async function RecipePage({
     async () => {
       const supabase = createClient();
 
-      const { data } = await supabase
-        .from("recipes")
-        .select()
-        .eq("id", params.recipeId)
-        .limit(1)
-        .single();
+      const select = supabase.from("recipes").select();
+
+      const query = isUuid(params.recipeId)
+        ? select.eq("id", params.recipeId)
+        : select.eq("slug", params.recipeId);
+
+      const { data } = await query.limit(1).single();
 
       return data;
     },
