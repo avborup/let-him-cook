@@ -16,7 +16,7 @@ import { WasmModule } from "@/lib/wasm";
 import { parseRecipe } from "@/lib/recipeBindings";
 
 export type RecipeViewProps = {
-  data: Omit<Tables<"recipes">, "id" | "has_photo"> & {
+  data: Omit<Tables<"recipes">, "id" | "has_photo" | "slug"> & {
     id?: string;
     has_photo?: boolean;
   };
