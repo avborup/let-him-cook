@@ -6,7 +6,10 @@ import { RecipeImage } from "@/components/recipe/recipe";
 
 export default async function RecipePage() {
   const supabase = createClient();
-  const { data } = await supabase.from("recipes").select();
+  const { data } = await supabase
+    .from("recipes")
+    .select()
+    .order("created_at", { ascending: false });
 
   if (!data) {
     notFound();
