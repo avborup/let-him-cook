@@ -137,11 +137,7 @@ export const StepSpan = ({
     case "inlineQuantity":
       const quantity = recipe.inline_quantities[item.index];
 
-      return (
-        <span className="text-orange-700 transition-colors font-semibold">
-          {getQuantityString(quantity.unit, quantity.value)}
-        </span>
-      );
+      return <span>{getQuantityString(quantity.unit, quantity.value)}</span>;
 
     case "text":
       return <span className="text-wrap break-words">{item.value}</span>;
@@ -149,17 +145,13 @@ export const StepSpan = ({
     case "cookware":
       const cookware = recipe.cookware[item.index];
 
-      return (
-        <span className="text-yellow-700 transition-colors font-semibold">
-          {cookware.name}
-        </span>
-      );
+      return <span>{cookware.name}</span>;
 
     case "timer":
       const timer = recipe.timers[item.index];
 
       return (
-        <span className="text-indigo-800 transition-colors font-semibold">
+        <span>
           {timer.quantity
             ? getQuantityString(
                 timer.quantity.unit,
