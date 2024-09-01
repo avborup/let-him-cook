@@ -16,6 +16,7 @@ export type Database = {
           has_photo: boolean
           id: string
           name: string
+          slug: string
         }
         Insert: {
           cooklang: string
@@ -23,6 +24,7 @@ export type Database = {
           has_photo?: boolean
           id?: string
           name: string
+          slug: string
         }
         Update: {
           cooklang?: string
@@ -30,6 +32,7 @@ export type Database = {
           has_photo?: boolean
           id?: string
           name?: string
+          slug?: string
         }
         Relationships: []
       }

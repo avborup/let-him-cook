@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import slugify from "slugify";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, {
@@ -48,12 +49,15 @@ export function RecipeForm() {
     const photoFile =
       values.picture && values.picture.length > 0 ? values.picture[0] : null;
 
+    const slug = slugify(values.name, { lower: true });
+
     const { data, error } = await supabase
       .from("recipes")
       .insert({
         name: values.name,
         cooklang: values.cooklang,
         has_photo: !!photoFile,
+        slug,
       })
       .select();
 
