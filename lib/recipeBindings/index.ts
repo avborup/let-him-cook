@@ -17,6 +17,7 @@ export type Ingredient = {
   alias?: string;
   quantity?: Quantity<ScalableValue>;
   note?: string;
+  modifiers: Modifier;
 };
 
 export type Quantity<V> = {
@@ -74,3 +75,5 @@ export type StepItem =
   | { type: "cookware"; index: number }
   | { type: "timer"; index: number }
   | { type: "inlineQuantity"; index: number };
+
+export type Modifier = "" | "RECIPE" | "HIDDEN" | "OPT" | "NEW";

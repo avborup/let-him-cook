@@ -13,14 +13,21 @@ export const IngredientsList = ({ recipe }: { recipe: Recipe }) => {
 
   return (
     <ul className="my-4 list-disc pl-5 space-y-3 leading-tight">
-      {recipe.ingredients.map((ingredient, index) => (
-        <li key={index}>
-          <IngredientItem ingredient={ingredient} />
-        </li>
-      ))}
+      {recipe.ingredients
+        .filter(shouldShowInIngredientsList)
+        .map((ingredient, index) => (
+          <li key={index}>
+            <IngredientItem ingredient={ingredient} />
+          </li>
+        ))}
     </ul>
   );
 };
+
+const ACCEPTED_INGREDIENT_MODIFIERS = ["OPT", ""];
+
+const shouldShowInIngredientsList = (ingredient: Ingredient): boolean =>
+  ACCEPTED_INGREDIENT_MODIFIERS.includes(ingredient.modifiers);
 
 export const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
   const caseClasses = "inline-block first-letter:uppercase";
