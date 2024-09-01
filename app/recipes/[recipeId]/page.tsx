@@ -1,4 +1,4 @@
-import { RecipeView } from "@/components/recipe/recipe";
+import RecipeView from "@/components/recipe/recipe-view-server";
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
 

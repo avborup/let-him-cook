@@ -14,11 +14,6 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@cooklang/cooklang-ts@^1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@cooklang/cooklang-ts/-/cooklang-ts-1.2.6.tgz#61ac470c1af498248f2362d7f8b8b28effcef0e2"
-  integrity sha512-W1a7hFMDgZtVtMvVbQGMegMoWjFGqA17ZD8rGsEBA7WUhTjlGeI/758DtUhxT36uFXFwGMc3LZF6TPFeIXAgGw==
-
 "@floating-ui/core@^1.6.0":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-1.6.5.tgz#102335cac0d22035b04d70ca5ff092d2d1a26f2b"

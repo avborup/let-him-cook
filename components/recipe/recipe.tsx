@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { Recipe } from "@cooklang/cooklang-ts";
 import { Heading2 } from "@/components/typography/h2";
 import { IngredientsList } from "@/components/recipe/ingredients";
-import { StepsList } from "@/components/recipe/steps";
+import { StepSections } from "@/components/recipe/steps";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,25 +12,36 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Tables } from "@/database.types";
 import { createClient } from "@/utils/supabase/client";
+import { WasmModule } from "@/lib/wasm";
+import { parseRecipe } from "@/lib/recipeBindings";
 
-export function RecipeView({
-  data,
-}: {
-  data: Tables<"recipes"> & { id?: string };
-}) {
-  const recipe = new Recipe(data.cooklang, {
-    includeStepNumber: true,
-    defaultIngredientAmount: "",
-  });
+export type RecipeViewProps = {
+  data: Omit<Tables<"recipes">, "id" | "has_photo"> & {
+    id?: string;
+    has_photo?: boolean;
+  };
+};
+
+export type InternalRecipeViewProps = RecipeViewProps & {
+  wasm: WasmModule;
+};
+
+export function RecipeView({ data, wasm }: InternalRecipeViewProps) {
+  const result = parseRecipe(wasm, data.cooklang);
+
+  if (!result.recipe) {
+    console.error("Recipe parse report:", result.report);
+    return <div>Recipe could not be parsed</div>;
+  }
 
   return (
     <div className="max-w-2xl">
       <RecipeBreadcrumb recipeName={data.name} />
       {data.has_photo && data.id && <RecipeImage id={data.id} />}
       <Heading2 className="pt-4">Ingredienser</Heading2>
-      <IngredientsList recipe={recipe} />
+      <IngredientsList recipe={result.recipe} />
       <Heading2 className="pt-4">Fremgangsmåde</Heading2>
-      <StepsList recipe={recipe} />
+      <StepSections recipe={result.recipe} />
     </div>
   );
 }
