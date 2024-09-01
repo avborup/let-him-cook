@@ -1,3 +1,5 @@
+const CopyPlugin = require("copy-webpack-plugin");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async redirects() {
@@ -21,19 +23,27 @@ const nextConfig = {
     ],
   },
 
-  webpack: (
-    config,
-    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
-  ) => {
-    // Use the client static directory in the server bundle and prod mode
-    // Fixes `Error occurred prerendering page "/"`
-    config.output.webassemblyModuleFilename =
-      isServer && !dev
-        ? "../static/pkg/[modulehash].wasm"
-        : "static/pkg/[modulehash].wasm";
-
-    // Since Webpack 5 doesn't enable WebAssembly by default, we should do it manually
+  // For all the issues with WASM bundling, see https://github.com/vercel/next.js/issues/25852
+  webpack: (config, { isServer, dev }) => {
     config.experiments = { ...config.experiments, asyncWebAssembly: true };
+
+    // I think the client configuration is unnecessary since that WASM file
+    // is copied into static/media for some reason.
+    config.plugins.push(
+      new CopyPlugin({
+        patterns: [
+          {
+            from: "cooklang-wasm/pkg/wasm-server/cooklang_wasm_bg.wasm",
+            to: "./static/wasm/cooklang_wasm_bg-server.wasm",
+          },
+        ],
+      }),
+    );
+
+    if (isServer && !dev) {
+      config.output.webassemblyModuleFilename =
+        "./../static/wasm/cooklang_wasm_bg-server.wasm";
+    }
 
     return config;
   },
