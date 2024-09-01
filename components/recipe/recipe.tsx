@@ -29,9 +29,18 @@ export type InternalRecipeViewProps = RecipeViewProps & {
 export function RecipeView({ data, wasm }: InternalRecipeViewProps) {
   const result = parseRecipe(wasm, data.cooklang);
 
+  console.log(JSON.stringify(result.recipe, null, 2));
+
   if (!result.recipe) {
     console.error("Recipe parse report:", result.report);
-    return <div>Recipe could not be parsed</div>;
+    return (
+      <>
+        <p>Opskriften kunne ikke læses. Årsag:</p>
+        <pre className="text-red-700">
+          <code>{result.report}</code>
+        </pre>
+      </>
+    );
   }
 
   return (

@@ -15,6 +15,8 @@ const convertRecipeResult = (input: Map<string, unknown>): RecipeResult => {
         acc[key] = value;
         return acc;
       }, {});
+    } else if (typeof value === "undefined") {
+      return null;
     } else {
       return value;
     }
