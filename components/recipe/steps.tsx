@@ -145,6 +145,21 @@ export const StepSpan = ({
     case "text":
       return <span className="text-wrap break-words">{item.value}</span>;
 
-    // TODO: Implement the rest of the cases
+    default:
+      return (
+        <Tooltip delayDuration={100}>
+          <TooltipTrigger>
+            <span className="text-red-700 transition-colors font-semibold">
+              ??
+            </span>
+          </TooltipTrigger>
+          <TooltipContent>
+            Manglende håndtering af opskrift-funktion.
+            <pre>
+              <code>{JSON.stringify(item, null, 2)}</code>
+            </pre>
+          </TooltipContent>
+        </Tooltip>
+      );
   }
 };
