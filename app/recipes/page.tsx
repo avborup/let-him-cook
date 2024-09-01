@@ -1,6 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound } from "next/navigation";
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tables } from "@/database.types";
 import { RecipeImage } from "@/components/recipe/recipe";
 
@@ -29,26 +35,32 @@ export default async function RecipePage() {
 const RecipeCard = ({ recipe }: { recipe: Tables<"recipes"> }) => {
   return (
     <li>
-      <Card className="h-44 flex flex-row">
-        {recipe.has_photo && (
-          <div className="h-full w-48 relative overflow-hidden rounded-md">
-            <RecipeImage id={recipe.id} />
+      <a href={`/recipes/${recipe.slug}`}>
+        <Card className="h-52 flex flex-row hover:bg-slate-50">
+          {recipe.has_photo && (
+            <div className="h-full min-w-52 w-52 relative overflow-hidden rounded-md">
+              <RecipeImage id={recipe.id} />
+            </div>
+          )}
+          <div className="flex flex-col p-3 leading-normal">
+            <CardHeader className="pb-4">
+              <CardTitle className="p-0">{recipe.name}</CardTitle>
+            </CardHeader>
+            {recipe.description && (
+              <CardContent className="pb-4">
+                <p className="text-sm text-gray-500 line-clamp-3">
+                  {recipe.description}
+                </p>
+              </CardContent>
+            )}
+            <CardFooter>
+              <div className="text-white bg-primary focus:ring-4 focus:ring-primary/30 font-medium rounded-md text-sm px-4 py-2 focus:outline-none">
+                Se opskrift
+              </div>
+            </CardFooter>
           </div>
-        )}
-        <div className="flex flex-col justify-between p-4 leading-normal">
-          <CardHeader>
-            <CardTitle>{recipe.name}</CardTitle>
-          </CardHeader>
-          <CardFooter>
-            <a
-              href={`/recipes/${recipe.slug}`}
-              className="text-white bg-primary hover:bg-primary/80 focus:ring-4 focus:ring-primary/30 font-medium rounded-md text-sm px-5 py-2.5 focus:outline-none"
-            >
-              Se opskrift
-            </a>
-          </CardFooter>
-        </div>
-      </Card>
+        </Card>
+      </a>
     </li>
   );
 };
