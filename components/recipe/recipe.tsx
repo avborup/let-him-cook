@@ -37,7 +37,11 @@ export function RecipeView({ data, wasm }: InternalRecipeViewProps) {
   return (
     <div className="max-w-2xl">
       <RecipeBreadcrumb recipeName={data.name} />
-      {data.has_photo && data.id && <RecipeImage id={data.id} />}
+      {data.has_photo && data.id && (
+        <div className="h-72 w-full relative overflow-hidden rounded-md">
+          <RecipeImage id={data.id} />
+        </div>
+      )}
       <Heading2 className="pt-4">Ingredienser</Heading2>
       <IngredientsList recipe={result.recipe} />
       <Heading2 className="pt-4">Fremgangsmåde</Heading2>
@@ -62,19 +66,17 @@ const RecipeBreadcrumb = ({ recipeName }: { recipeName: string }) => {
   );
 };
 
-const RecipeImage = ({ id }: { id: string }) => {
+export const RecipeImage = ({ id }: { id: string }) => {
   const supabase = createClient();
   const imageUrl = supabase.storage.from("recipePhotos").getPublicUrl(id)
     .data.publicUrl;
 
   return (
-    <div className="h-72 w-full relative overflow-hidden rounded-md">
-      <Image
-        src={imageUrl}
-        alt="Picture of the recipe"
-        layout="fill"
-        className="object-cover"
-      />
-    </div>
+    <Image
+      src={imageUrl}
+      alt="Picture of the recipe"
+      layout="fill"
+      className="object-cover"
+    />
   );
 };
