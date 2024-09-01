@@ -78,6 +78,7 @@ export const StepSpan = ({
           <TooltipTrigger>{content}</TooltipTrigger>
           <TooltipContent>
             <IngredientItem ingredient={ingredient} />
+            {ingredient.note && ". " + ingredient.note}
           </TooltipContent>
         </Tooltip>
       ) : (
