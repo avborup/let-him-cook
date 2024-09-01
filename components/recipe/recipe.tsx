@@ -51,6 +51,9 @@ export function RecipeView({ data, wasm }: InternalRecipeViewProps) {
           <RecipeImage id={data.id} />
         </div>
       )}
+      {data.description && (
+        <p className="pt-4 whitespace-pre-wrap">{data.description}</p>
+      )}
       <Heading2 className="pt-4">Ingredienser</Heading2>
       <IngredientsList recipe={result.recipe} />
       <Heading2 className="pt-4">Fremgangsmåde</Heading2>

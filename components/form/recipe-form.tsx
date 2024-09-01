@@ -33,6 +33,7 @@ const formSchema = z.object({
     message: "Opskrift-indhold er påkrævet",
   }),
   picture: z.instanceof(FileList).optional(),
+  description: z.string().optional(),
 });
 
 export function RecipeForm() {
@@ -58,6 +59,7 @@ export function RecipeForm() {
         cooklang: values.cooklang,
         has_photo: !!photoFile,
         slug,
+        description: values.description?.trim() || null,
       })
       .select();
 
@@ -123,6 +125,23 @@ export function RecipeForm() {
         />
         <FormField
           control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Beskrivelse (valgfrit)</FormLabel>
+              <FormControl>
+                <Textarea className="resize-none h-24" {...field} />
+              </FormControl>
+              <FormDescription>
+                En kort beskrivelse af opskriften. Kom med noget spændende
+                information eller et personligt flair!
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="cooklang"
           render={({ field }) => (
             <FormItem>
@@ -177,6 +196,7 @@ export function RecipeForm() {
                   name: form.watch("name"),
                   cooklang: form.watch("cooklang"),
                   created_at: new Date().toISOString(),
+                  description: form.watch("description") ?? null,
                 }}
               />
             </DialogContent>

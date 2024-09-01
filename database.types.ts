@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           cooklang: string
           created_at: string
+          description: string | null
           has_photo: boolean
           id: string
           name: string
@@ -21,6 +22,7 @@ export type Database = {
         Insert: {
           cooklang: string
           created_at?: string
+          description?: string | null
           has_photo?: boolean
           id?: string
           name: string
@@ -29,6 +31,7 @@ export type Database = {
         Update: {
           cooklang?: string
           created_at?: string
+          description?: string | null
           has_photo?: boolean
           id?: string
           name?: string
