@@ -37,9 +37,13 @@ export const StepsList = ({
 }) => {
   return (
     <ol className="my-4 list-decimal pl-5 space-y-3">
-      {section.content.map((step, index) => (
-        <StepItem recipe={recipe} key={index} step={step} />
-      ))}
+      {section.content.map((content, index) =>
+        content.type === "step" ? (
+          <StepItem recipe={recipe} key={index} step={content} />
+        ) : (
+          <TextItem key={index} text={content} />
+        ),
+      )}
     </ol>
   );
 };
@@ -49,15 +53,25 @@ export const StepItem = ({
   step,
 }: {
   recipe: Recipe;
-  step: Content;
+  step: Extract<Content, { type: "step" }>;
 }) => {
   return (
-    <li>
-      {step.type === "text"
-        ? step.value
-        : step.value.items.map((item, index) => (
-            <StepSpan key={index} item={item} recipe={recipe} />
-          ))}
+    <li value={step.value.number}>
+      {step.value.items.map((item, index) => (
+        <StepSpan key={index} item={item} recipe={recipe} />
+      ))}
+    </li>
+  );
+};
+
+export const TextItem = ({
+  text,
+}: {
+  text: Extract<Content, { type: "text" }>;
+}) => {
+  return (
+    <li className="list-none border-l-2 border-primary pl-2 -ml-2 text-gray-500">
+      {text.value}
     </li>
   );
 };
