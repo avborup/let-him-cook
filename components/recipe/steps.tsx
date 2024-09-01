@@ -5,7 +5,13 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { IngredientItem, getQuantityString } from "./ingredients";
-import { Content, Recipe, Section, Step } from "@/lib/recipeBindings";
+import {
+  Content,
+  Ingredient,
+  Recipe,
+  Section,
+  Step,
+} from "@/lib/recipeBindings";
 
 export const StepSections = ({ recipe }: { recipe: Recipe }) => {
   return (
@@ -65,21 +71,49 @@ export const StepSpan = ({
 }) => {
   switch (item.type) {
     case "ingredient":
-      const ingredient = recipe.ingredients[item.index];
+      const ingredientItem = recipe.ingredients[item.index];
+
+      const ingredientLabel = ingredientItem.alias ?? ingredientItem.name;
+
+      const getSourceIngredient = (ingredient: Ingredient) => {
+        if (ingredient.modifiers !== "REF") return ingredient;
+        if (ingredient.relation.type !== "reference") return ingredient;
+        if (ingredient.relation.reference_target !== "ingredient")
+          return ingredient;
+
+        return recipe.ingredients[ingredient.relation.references_to];
+      };
+
+      const ingredient = getSourceIngredient(ingredientItem);
 
       const content = (
         <span className="text-green-700 transition-colors font-semibold hover:underline decoration-dotted underline-offset-4">
-          {ingredient.name}
+          {ingredientLabel}
         </span>
       );
 
-      return ingredient.quantity ? (
-        <Tooltip delayDuration={100}>
-          <TooltipTrigger>{content}</TooltipTrigger>
-          <TooltipContent>
+      let toolTipContent = [];
+
+      if (ingredient.quantity) {
+        toolTipContent.push(
+          <>
             <IngredientItem ingredient={ingredient} />
             {ingredient.note && ". " + ingredient.note}
-          </TooltipContent>
+          </>,
+        );
+      }
+
+      if (
+        ingredient.relation.type === "reference" &&
+        ingredient.relation.reference_target === "step"
+      ) {
+        toolTipContent.push(`Se trin ${ingredient.relation.references_to + 1}`);
+      }
+
+      return toolTipContent.length > 0 ? (
+        <Tooltip delayDuration={100}>
+          <TooltipTrigger>{content}</TooltipTrigger>
+          <TooltipContent>{toolTipContent}</TooltipContent>
         </Tooltip>
       ) : (
         content

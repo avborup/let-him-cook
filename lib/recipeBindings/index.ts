@@ -18,6 +18,7 @@ export type Ingredient = {
   quantity?: Quantity<ScalableValue>;
   note?: string;
   modifiers: Modifier;
+  relation: IngredientRelation;
 };
 
 export type Quantity<V> = {
@@ -55,6 +56,14 @@ export type Fraction = {
   err: number;
 };
 
+export type IngredientRelation =
+  | { type: "definition"; defined_in_step: boolean; referenced_from: number[] }
+  | {
+      type: "reference";
+      reference_target: "ingredient" | "step";
+      references_to: number;
+    };
+
 export type Section = {
   name?: string;
   content: Content[];
@@ -76,4 +85,4 @@ export type StepItem =
   | { type: "timer"; index: number }
   | { type: "inlineQuantity"; index: number };
 
-export type Modifier = "" | "RECIPE" | "HIDDEN" | "OPT" | "NEW";
+export type Modifier = "" | "RECIPE" | "HIDDEN" | "OPT" | "NEW" | "REF";
