@@ -35,7 +35,7 @@ export type ScalableValue = {
 export type Value =
   | { type: "text"; value: string }
   | { type: "number"; value: CooklangNumber }
-  | { type: "range"; value: { start: number; end: number } };
+  | { type: "range"; value: { start: CooklangNumber; end: CooklangNumber } };
 
 export type CooklangNumber =
   | { type: "regular"; value: number }

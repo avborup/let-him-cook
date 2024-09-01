@@ -1,4 +1,9 @@
-import { Ingredient, Recipe, Value } from "@/lib/recipeBindings";
+import {
+  CooklangNumber,
+  Ingredient,
+  Recipe,
+  Value,
+} from "@/lib/recipeBindings";
 
 export const IngredientsList = ({ recipe }: { recipe: Recipe }) => {
   if (recipe.ingredients.length === 0) {
@@ -48,6 +53,15 @@ export const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
   );
 };
 
+export const cooklangNumberToString = (num: CooklangNumber): string => {
+  switch (num.type) {
+    case "regular":
+      return num.value.toString();
+    case "fraction":
+      return `${num.value.whole} ${num.value.num}/${num.value.den}`;
+  }
+};
+
 export const getQuantityString = (
   unit: string | undefined,
   amount: Value,
@@ -58,18 +72,10 @@ export const getQuantityString = (
       output += amount.value;
       break;
     case "number":
-      const num = amount.value;
-      switch (num.type) {
-        case "regular":
-          output += num.value;
-          break;
-        case "fraction":
-          output += `${num.value.whole} ${num.value.num}/${num.value.den}`;
-          break;
-      }
+      output += cooklangNumberToString(amount.value);
       break;
     case "range":
-      output += `${amount.value.start}-${amount.value.end}`;
+      output += `${cooklangNumberToString(amount.value.start)}-${cooklangNumberToString(amount.value.end)}`;
       break;
   }
 
