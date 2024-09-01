@@ -44,7 +44,7 @@ export default async function RecipePage({
 export async function generateStaticParams() {
   const supabase = createClient();
 
-  const results = await supabase.from("recipes").select("id");
+  const results = await supabase.from("recipes").select("slug");
 
-  return (results.data ?? []).map(({ id }) => ({ recipeId: id }));
+  return (results.data ?? []).map(({ slug }) => ({ recipeId: slug }));
 }
