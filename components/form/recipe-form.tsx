@@ -144,7 +144,16 @@ export function RecipeForm() {
                 >
                   Cooklang-formatet
                 </Link>{" "}
-                til at definere opskriften.
+                (med{" "}
+                <Link
+                  href="https://github.com/cooklang/cooklang-rs/blob/main/extensions.md"
+                  className="underline"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  udvidelser
+                </Link>
+                ) til at definere opskriften .
               </FormDescription>
               <FormMessage />
             </FormItem>
