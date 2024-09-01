@@ -11,6 +11,7 @@ export type Recipe = {
   sections: Section[];
   inline_quantities: Quantity<Value>[];
   cookware: Cookware[];
+  timers: Timer[];
 };
 
 export type Ingredient = {
@@ -98,4 +99,9 @@ export type Cookware = {
   quantity?: Value;
   relation: ComponentRelation;
   modifiers: Modifier;
+};
+
+export type Timer = {
+  name?: string;
+  quantity?: Quantity<ScalableValue | Value>;
 };

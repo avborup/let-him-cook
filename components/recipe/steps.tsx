@@ -12,6 +12,7 @@ import {
   Section,
   Step,
 } from "@/lib/recipeBindings";
+import { isScalableValue } from "@/lib/recipeBindings/typeUtils";
 
 export const StepSections = ({ recipe }: { recipe: Recipe }) => {
   return (
@@ -151,6 +152,22 @@ export const StepSpan = ({
       return (
         <span className="text-yellow-700 transition-colors font-semibold">
           {cookware.name}
+        </span>
+      );
+
+    case "timer":
+      const timer = recipe.timers[item.index];
+
+      return (
+        <span className="text-indigo-800 transition-colors font-semibold">
+          {timer.quantity
+            ? getQuantityString(
+                timer.quantity.unit,
+                isScalableValue(timer.quantity.value)
+                  ? timer.quantity.value.value
+                  : timer.quantity.value,
+              )
+            : timer.name}
         </span>
       );
 
