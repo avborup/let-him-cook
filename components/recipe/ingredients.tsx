@@ -1,10 +1,4 @@
-import {
-  Ingredient,
-  Quantity,
-  Recipe,
-  ScalableValue,
-  Value,
-} from "@/lib/recipeBindings";
+import { Ingredient, Recipe, Value } from "@/lib/recipeBindings";
 
 export const IngredientsList = ({ recipe }: { recipe: Recipe }) => {
   if (recipe.ingredients.length === 0) {
@@ -17,7 +11,10 @@ export const IngredientsList = ({ recipe }: { recipe: Recipe }) => {
         .filter(shouldShowInIngredientsList)
         .map((ingredient, index) => (
           <li key={index}>
-            <IngredientItem ingredient={ingredient} />
+            <IngredientItem ingredient={ingredient} />{" "}
+            {ingredient.note && (
+              <span className="text-sm text-gray-500	">({ingredient.note})</span>
+            )}
           </li>
         ))}
     </ul>
