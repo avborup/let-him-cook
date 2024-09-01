@@ -49,6 +49,9 @@ export const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
       <span className={ingredient.quantity ? "" : caseClasses}>
         {ingredient.name}
       </span>
+      {ingredient.modifiers === "OPT" ? (
+        <span className="text-gray-500"> (valgfri)</span>
+      ) : null}
     </>
   );
 };

@@ -118,6 +118,10 @@ export const StepSpan = ({
         );
       }
 
+      if (ingredient.modifiers === "OPT") {
+        toolTipContent.push("Valgfri ingrediens");
+      }
+
       if (
         ingredient.relation.type === "reference" &&
         ingredient.relation.reference_target === "step"
