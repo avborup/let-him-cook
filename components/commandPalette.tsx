@@ -74,7 +74,7 @@ export function CommandMenu() {
             recipes.map((recipe) => (
               <CommandItem
                 key={recipe.id}
-                onSelect={() => goToPage(`/recipes/${recipe.id}`)}
+                onSelect={() => goToPage(`/recipes/${recipe.slug}`)}
                 value={recipe.name + " " + recipe.cooklang}
               >
                 <FileTextIcon className="mr-2 h-4 w-4" />
