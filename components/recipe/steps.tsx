@@ -145,6 +145,15 @@ export const StepSpan = ({
     case "text":
       return <span className="text-wrap break-words">{item.value}</span>;
 
+    case "cookware":
+      const cookware = recipe.cookware[item.index];
+
+      return (
+        <span className="text-yellow-700 transition-colors font-semibold">
+          {cookware.name}
+        </span>
+      );
+
     default:
       return (
         <Tooltip delayDuration={100}>

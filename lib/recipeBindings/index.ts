@@ -10,6 +10,7 @@ export type Recipe = {
   ingredients: Ingredient[];
   sections: Section[];
   inline_quantities: Quantity<Value>[];
+  cookware: Cookware[];
 };
 
 export type Ingredient = {
@@ -56,13 +57,16 @@ export type Fraction = {
   err: number;
 };
 
-export type IngredientRelation =
+export type ComponentRelation =
   | { type: "definition"; defined_in_step: boolean; referenced_from: number[] }
   | {
       type: "reference";
-      reference_target: "ingredient" | "step";
       references_to: number;
     };
+
+export type IngredientRelation = ComponentRelation & {
+  reference_target?: "ingredient" | "step" | "section";
+};
 
 export type Section = {
   name?: string;
@@ -86,3 +90,12 @@ export type StepItem =
   | { type: "inlineQuantity"; index: number };
 
 export type Modifier = "" | "RECIPE" | "HIDDEN" | "OPT" | "NEW" | "REF";
+
+export type Cookware = {
+  name: string;
+  alias?: string;
+  note?: string;
+  quantity?: Value;
+  relation: ComponentRelation;
+  modifiers: Modifier;
+};
