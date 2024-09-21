@@ -24,9 +24,14 @@ export type RecipeViewProps = {
 
 export type InternalRecipeViewProps = RecipeViewProps & {
   wasm: WasmModule;
+  isMobile?: boolean;
 };
 
-export function RecipeView({ data, wasm }: InternalRecipeViewProps) {
+export function RecipeView({
+  data,
+  wasm,
+  isMobile = false,
+}: InternalRecipeViewProps) {
   const result = parseRecipe(wasm, data.cooklang);
 
   console.log(JSON.stringify(result.recipe, null, 2));
@@ -57,7 +62,7 @@ export function RecipeView({ data, wasm }: InternalRecipeViewProps) {
       <Heading2 className="pt-4">Ingredienser</Heading2>
       <IngredientsList recipe={result.recipe} />
       <Heading2 className="pt-4">Fremgangsmåde</Heading2>
-      <StepSections recipe={result.recipe} />
+      <StepSections recipe={result.recipe} isMobile={isMobile} />
     </div>
   );
 }

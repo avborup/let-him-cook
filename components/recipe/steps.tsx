@@ -4,6 +4,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { IngredientItem, getQuantityString } from "./ingredients";
 import {
   Content,
@@ -14,7 +19,13 @@ import {
 } from "@/lib/recipeBindings";
 import { isScalableValue } from "@/lib/recipeBindings/typeUtils";
 
-export const StepSections = ({ recipe }: { recipe: Recipe }) => {
+export const StepSections = ({
+  recipe,
+  isMobile,
+}: {
+  recipe: Recipe;
+  isMobile: boolean;
+}) => {
   return (
     <TooltipProvider>
       {recipe.sections.map((section, index) => (
@@ -22,7 +33,7 @@ export const StepSections = ({ recipe }: { recipe: Recipe }) => {
           {section.name && (
             <h2 className="text-2xl font-bold">{section.name}</h2>
           )}
-          <StepsList recipe={recipe} section={section} />
+          <StepsList recipe={recipe} section={section} isMobile={isMobile} />
         </section>
       ))}
     </TooltipProvider>
@@ -32,15 +43,22 @@ export const StepSections = ({ recipe }: { recipe: Recipe }) => {
 export const StepsList = ({
   recipe,
   section,
+  isMobile,
 }: {
   recipe: Recipe;
   section: Section;
+  isMobile: boolean;
 }) => {
   return (
     <ol className="my-4 list-decimal pl-5 space-y-3">
       {section.content.map((content, index) =>
         content.type === "step" ? (
-          <StepItem recipe={recipe} key={index} step={content} />
+          <StepItem
+            recipe={recipe}
+            key={index}
+            step={content}
+            isMobile={isMobile}
+          />
         ) : (
           <TextItem key={index} text={content} />
         ),
@@ -52,14 +70,16 @@ export const StepsList = ({
 export const StepItem = ({
   recipe,
   step,
+  isMobile,
 }: {
   recipe: Recipe;
   step: Extract<Content, { type: "step" }>;
+  isMobile: boolean;
 }) => {
   return (
     <li value={step.value.number}>
       {step.value.items.map((item, index) => (
-        <StepSpan key={index} item={item} recipe={recipe} />
+        <StepSpan key={index} item={item} recipe={recipe} isMobile={isMobile} />
       ))}
     </li>
   );
@@ -80,9 +100,11 @@ export const TextItem = ({
 export const StepSpan = ({
   item,
   recipe,
+  isMobile,
 }: {
   recipe: Recipe;
   item: Step["items"][number];
+  isMobile: boolean;
 }) => {
   switch (item.type) {
     case "ingredient":
@@ -130,10 +152,17 @@ export const StepSpan = ({
       }
 
       return toolTipContent.length > 0 ? (
-        <Tooltip delayDuration={100}>
-          <TooltipTrigger>{content}</TooltipTrigger>
-          <TooltipContent>{toolTipContent}</TooltipContent>
-        </Tooltip>
+        isMobile ? (
+          <Popover>
+            <PopoverTrigger>{content}</PopoverTrigger>
+            <PopoverContent>{toolTipContent}</PopoverContent>
+          </Popover>
+        ) : (
+          <Tooltip delayDuration={100}>
+            <TooltipTrigger>{content}</TooltipTrigger>
+            <TooltipContent>{toolTipContent}</TooltipContent>
+          </Tooltip>
+        )
       ) : (
         content
       );
