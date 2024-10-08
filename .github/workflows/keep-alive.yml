@@ -1,0 +1,30 @@
+# Adapted from: https://medium.com/@muhdfarseen/a-simple-hack-for-bypassing-supabase-pausing-03fa1d94a41e
+name: Ping Supabase to Prevent Pausing
+
+on:
+  schedule:
+    - cron: '45 15 * * 2,5' # Twice a week (Tue/Fri, UTC time)
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install @supabase/supabase-js
+
+      - name: Ping Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          node -e "
+          const { createClient } = require('@supabase/supabase-js');
+          const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+          supabase.from('recipes').select('id').limit(1).then(console.log).catch(console.error);
+          "
